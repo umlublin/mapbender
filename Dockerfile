@@ -16,7 +16,8 @@ php app/console assets:install --symlink --relative && \
 php app/console mapbender:database:init -v && \
 php bin/composer run post-autoload-dump
 
-RUN chmod a+rwx /mapbender/application/app/logs
+RUN chmod a+rwx /mapbender/application/app/logs && rm /mapbender/application/app/logs/dev.log
+
 # Change back to the "node" user; using its UID for PodSecurityPolicy "non-root" compatibility
 #echo ' cd application'
 #echo ' php app/console server:run'
