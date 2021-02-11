@@ -22,5 +22,5 @@ RUN chmod a+rwx /mapbender/application/app/logs && rm /mapbender/application/app
 #echo ' cd application'
 #echo ' php app/console server:run'
 USER 1000
-CMD ["php /mapbender/application/app/console", "server:run"]
+CMD ["php", "/mapbender/application/app/console", "server:run"]
 
