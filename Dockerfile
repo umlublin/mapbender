@@ -1,4 +1,4 @@
-FROM debian-slim:10
+FROM debian:buster-slim
 
 RUN apt-get update && apt-get install -y locales php php-cli openssl bzip2 \
     php-curl php-gd php-intl php-mbstring php-zip php-bz2 php-xml php-json \
