@@ -1,4 +1,4 @@
-FROM debian:9
+FROM debian:10
 
 RUN apt-get update -y
 RUN apt-get upgrade -y --force-yes
@@ -12,14 +12,18 @@ RUN apt-get install sqlite3 php7.2-sqlite3 php7.2-intl openssl php7.2-zip php7.2
 RUN apt-get install php7.2-fpm php7.2-pgsql php7.2-mysql -y --allow-unauthenticated
 
 RUN git clone https://github.com/mapbender/mapbender-starter.git /var/www/mapbender
-RUN chmod a+x /var/www/mapbender/application/vendor/wheregroup/sassc-binaries/dist/sassc 
-RUN cd /var/www/mapbender; ./bootstrap
+RUN cd /var/www/mapbender/application && \
+php bin/composer install -o --no-scripts --no-suggest && \
+chmod a+x /var/www/mapbender/application/vendor/wheregroup/sassc-binaries/dist/sassc && \
+php bin/composer run build-bootstrap && \
+php bin/composer init-example && \
+php app/console assets:install --symlink --relative && \
+php app/console mapbender:database:init -v && \
+php bin/composer run post-autoload-dump
 
 RUN chown -R www-data:www-data /var/www/mapbender
 RUN chmod -R ugo+r /var/www/mapbender
 RUN chmod -R ug+w /var/www/mapbender/application/web/uploads
-#RUN chmod ug+w /var/www/mapbender/application/app/db/demo.sqlite
-#RUN chmod ug+x /var/www/mapbender/application/vendor/eslider/sasscb/dist/sassc
 
 RUN a2enmod rewrite
 RUN echo 'ServerName localhost' >> /etc/apache2/apache2.conf
