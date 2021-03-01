@@ -14,15 +14,16 @@ php bin/composer run build-bootstrap && \
 php bin/composer init-example && \
 php app/console assets:install --symlink --relative && \
 php app/console mapbender:database:init -v && \
-php bin/composer run post-autoload-dump
-
-RUN rm /etc/apache2/sites-enabled/000-default.conf
-
-RUN chmod a+rwx /mapbender/application/app/logs && rm /mapbender/application/app/logs/dev.log
+php bin/composer run post-autoload-dump && \
+ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load && \
+rm /etc/apache2/sites-enabled/000-default.conf && \
+chown www-data:www-data /mapbender/application/app/db && \
+chown www-data:www-data /mapbender/application/app/cache && \
+chown www-data:www-data /mapbender/application/app/logs && \
 
 # Change back to the "node" user; using its UID for PodSecurityPolicy "non-root" compatibility
 #echo ' cd application'
 #echo ' php app/console server:run'
 USER 1000
-CMD ["php", "/mapbender/application/app/console", "server:run", "--env prod"]
+CMD ["cat", ""]
 
