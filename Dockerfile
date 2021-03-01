@@ -2,7 +2,7 @@ FROM debian:buster-slim
 
 RUN apt-get update && apt-get install -y locales git php php-cli openssl bzip2 \
     php-curl php-gd php-intl php-mbstring php-zip php-bz2 php-xml php-json \
-    php-sqlite3 php-pgsql php-mysql php-ldap sqlite3 curl && rm -rf /var/lib/apt/lists/* \
+    php-sqlite3 php-pgsql php-mysql php-ldap sqlite3 curl mc && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG en_US.utf8
 
@@ -15,6 +15,8 @@ php bin/composer init-example && \
 php app/console assets:install --symlink --relative && \
 php app/console mapbender:database:init -v && \
 php bin/composer run post-autoload-dump
+
+RUN rm /etc/apache2/sites-enabled/000-default.conf
 
 RUN chmod a+rwx /mapbender/application/app/logs && rm /mapbender/application/app/logs/dev.log
 
