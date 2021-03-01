@@ -17,7 +17,7 @@ RUN cd /var/www/mapbender; ./bootstrap
 RUN chown -R www-data:www-data /var/www/mapbender
 RUN chmod -R ugo+r /var/www/mapbender
 RUN chmod -R ug+w /var/www/mapbender/application/web/uploads
-RUN chmod ug+w /var/www/mapbender/application/app/db/demo.sqlite
+#RUN chmod ug+w /var/www/mapbender/application/app/db/demo.sqlite
 RUN chmod ug+x /var/www/mapbender/application/vendor/eslider/sasscb/dist/sassc
 
 RUN a2enmod rewrite
