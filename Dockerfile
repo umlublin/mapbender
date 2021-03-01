@@ -12,6 +12,7 @@ RUN apt-get install sqlite3 php7.2-sqlite3 php7.2-intl openssl php7.2-zip php7.2
 RUN apt-get install php7.2-fpm php7.2-pgsql php7.2-mysql -y --allow-unauthenticated
 
 RUN git clone https://github.com/mapbender/mapbender-starter.git /var/www/mapbender
+RUN chmod a+x /var/www/mapbender/application/vendor/wheregroup/sassc-binaries/dist/sassc 
 RUN cd /var/www/mapbender; ./bootstrap
 
 RUN chown -R www-data:www-data /var/www/mapbender
